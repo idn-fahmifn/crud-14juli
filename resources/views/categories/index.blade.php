@@ -50,7 +50,7 @@
             </div>
 
             {{-- TABLE --}}
-            <div class="bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden">
+            <div class="bg-white dark:bg-slate-900 rounded-lg overflow-hidden">
 
                 <table class="w-full">
 
@@ -93,69 +93,17 @@
 
         <div class="p-8">
 
-            <h2 class="text-2xl font-black mb-6">
-                Tambah Lokasi
+            <h2 class="text-2xl font-black mb-6 dark:text-slate-200">
+                Add new category
             </h2>
 
-            <form class="space-y-5">
-
+            <form method="post" action="{{route('category.store')}}" class="space-y-5">
+                @csrf
                 <div>
-
-                    <x-input-label value="Nama Lokasi" />
-
+                    <x-input-label for="category_name" value="Category Name" />
                     <x-text-input
-                        type="text"
+                        type="text" name="category_name" id="category_name"
                         class="mt-2 block w-full rounded-2xl" />
-
-                </div>
-
-                <div>
-
-                    <x-input-label value="Ukuran" />
-
-                    <select class="mt-2 block w-full rounded-2xl border-slate-300">
-
-                        <option>Small</option>
-                        <option>Medium</option>
-                        <option>Large</option>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <x-input-label value="Status" />
-
-                    <select class="mt-2 block w-full rounded-2xl border-slate-300">
-
-                        <option>Available</option>
-                        <option>Close</option>
-                        <option>Full</option>
-                        <option>Maintenance</option>
-
-                    </select>
-
-                </div>
-
-                <div>
-
-                    <x-input-label value="Layout Image" />
-
-                    <x-text-input
-                        type="file"
-                        class="mt-2 block w-full rounded-2xl" />
-
-                </div>
-
-                <div>
-
-                    <x-input-label value="Deskripsi" />
-
-                    <textarea
-                        rows="4"
-                        class="mt-2 block w-full rounded-2xl border-slate-300"></textarea>
-
                 </div>
 
                 <div class="flex justify-end gap-3 pt-5">
@@ -165,7 +113,7 @@
                         x-on:click="$dispatch('close')"
                         class="px-6 py-3 rounded-2xl text-slate-500 hover:bg-slate-100">
 
-                        Batal
+                        Cancel
 
                     </button>
 
@@ -173,7 +121,7 @@
                         type="submit"
                         class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl font-bold">
 
-                        Simpan
+                        Save
 
                     </button>
 
