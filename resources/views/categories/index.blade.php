@@ -73,7 +73,7 @@
                         <tr class="text-slate-600 dark:text-slate-200">
 
                             <td class="px-8 py-6">{{ $row->category_name }}</td>
-                            <td class="px-8 py-6 font-bold">10 Itm</td>
+                            <td class="px-8 py-6 font-bold">{{$row->item_count}} Item</td>
                             <td class="px-8 py-6 text-emerald-500 font-bold">
                                 <a href="" class="text-bold">Detail</a>
                             </td>

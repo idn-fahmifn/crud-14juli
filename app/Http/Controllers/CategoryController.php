@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
+
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
     public function index()
     {
         return view('categories.index', [
-            'data' => Category::all(),
+            'data' => Category::withCount('item')->get(),
         ]);
     }
 
