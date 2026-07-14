@@ -16,9 +16,7 @@
 
             </div>
 
-            <button
-                x-data=""
-                x-on:click.prevent="$dispatch('open-modal', 'create-location')"
+            <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-location')"
                 class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-bold text-sm">
 
                 + Add New
@@ -34,13 +32,13 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             {{-- ALERT --}}
-            <div
-                x-data="{ show: true }"
-                x-show="show"
+
+            @if (session('success'))
+            <div x-data="{ show: true }" x-show="show"
                 class="mb-6 flex items-center justify-between bg-blue-100 border border-blue-300 text-blue-700 px-6 py-4 rounded-2xl">
 
                 <span class="font-semibold">
-                    Lokasi berhasil dibuat
+                    {{ session('success') }}
                 </span>
 
                 <button @click="show = false">
@@ -48,6 +46,9 @@
                 </button>
 
             </div>
+            @endif
+
+
 
             {{-- TABLE --}}
             <div class="bg-white dark:bg-slate-900 rounded-lg overflow-hidden">
@@ -68,9 +69,10 @@
 
                     <tbody>
 
+                    @forelse ($data as $row)
                         <tr class="text-slate-600 dark:text-slate-200">
 
-                            <td class="px-8 py-6">Electronic</td>
+                            <td class="px-8 py-6">{{ $row->category_name }}</td>
                             <td class="px-8 py-6 font-bold">10 Itm</td>
                             <td class="px-8 py-6 text-emerald-500 font-bold">
                                 <a href="" class="text-bold">Detail</a>
@@ -78,6 +80,11 @@
 
                         </tr>
 
+                    @empty
+                        
+                    @endforelse
+
+                        
                     </tbody>
 
                 </table>
@@ -101,24 +108,20 @@
                 @csrf
                 <div>
                     <x-input-label for="category_name" value="Category Name" />
-                    <x-text-input
-                        type="text" name="category_name" id="category_name"
+                    <x-text-input type="text" name="category_name" id="category_name"
                         class="mt-2 block w-full rounded-2xl" />
                 </div>
 
                 <div class="flex justify-end gap-3 pt-5">
 
-                    <button
-                        type="button"
-                        x-on:click="$dispatch('close')"
+                    <button type="button" x-on:click="$dispatch('close')"
                         class="px-6 py-3 rounded-2xl text-slate-500 hover:bg-slate-100">
 
                         Cancel
 
                     </button>
 
-                    <button
-                        type="submit"
+                    <button type="submit"
                         class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl font-bold">
 
                         Save
