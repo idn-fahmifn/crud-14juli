@@ -24,4 +24,31 @@ class CategoryController extends Controller
 
         return back()->with('success', 'Category has been created');
     }
+
+    public function detail($param)
+    {
+        return view('categories.detail', [
+            'data' => Category::where('uuid', $param)->withCount('item')->firstOrFail(),
+        ]);
+    }
+
+    public function update(CategoryRequest $request, $param)
+    {
+        
+        $category = Category::where('uuid', $param)->first();
+        $data = $request->validated();
+        $data['uuid'] = Str::uuid();
+
+        $category->update($data);
+
+        return redirect()->route('category.detail', $category->uuid)->with('success', 'Category has been edited');
+    }
+
+    public function delete($param)
+    {
+        $category = Category::where('uuid', $param)->first();
+        $category->delete();
+        return redirect()->route('category.index')->with('success', 'Category has been deleted');
+    }
+
 }

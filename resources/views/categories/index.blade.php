@@ -69,22 +69,24 @@
 
                     <tbody>
 
-                    @forelse ($data as $row)
+                        @forelse ($data as $row)
                         <tr class="text-slate-600 dark:text-slate-200">
 
                             <td class="px-8 py-6">{{ $row->category_name }}</td>
                             <td class="px-8 py-6 font-bold">{{$row->item_count}} Item</td>
                             <td class="px-8 py-6 text-emerald-500 font-bold">
-                                <a href="" class="text-bold">Detail</a>
+                                <a href="{{route('category.detail', $row->uuid)}}" class="text-bold">Detail</a>
                             </td>
 
                         </tr>
 
-                    @empty
-                        
-                    @endforelse
+                        @empty
+                        <tr class="text-slate-600 dark:text-slate-200">
+                            <td colspan="3" class="px-8 py-6 text-emerald-500 font-bold">Category Not Found</td>
+                        </tr>
+                        @endforelse
 
-                        
+
                     </tbody>
 
                 </table>
@@ -108,8 +110,10 @@
                 @csrf
                 <div>
                     <x-input-label for="category_name" value="Category Name" />
-                    <x-text-input type="text" name="category_name" id="category_name"
+                    <x-text-input type="text" name="category_name" id="category_name" :value="old('category_name')"
                         class="mt-2 block w-full rounded-2xl" />
+                    <x-input-error :messages="$errors->get('category_name')" class="mt-2" />
+
                 </div>
 
                 <div class="flex justify-end gap-3 pt-5">
