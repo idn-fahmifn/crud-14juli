@@ -23,12 +23,16 @@ class ItemRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isUpdate = $this->isMethod('PUT') || $this->isMethod('PATCH');
+        $item = $this->route('item');
+
         return [
             'item_name' => ['required', 'string', 'max:100'],
             'category' => ['required', 'integer', Rule::exists('categories', 'id')],
             'price' => ['required', 'numeric', 'min:0'],
             'condition' => ['required', Rule::in(['good', 'bad', 'maintenance'])],
-            'image' => ['required', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
+            'image' => [ $isUpdate ? 'nullable' : 'required',
+                'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
             'desc' => ['required', 'max:1000']
         ];
     }

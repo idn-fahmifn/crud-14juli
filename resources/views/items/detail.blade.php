@@ -144,7 +144,7 @@
 
             <form method="post" action="{{route('items.update', $data->uuid)}}" enctype="multipart/form-data" class="space-y-5">
                 @csrf
-                @method('put')
+                @method('PUT')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 my-4 ">
                     <div>
                         <x-input-label for="item_name" value="Item Name" />

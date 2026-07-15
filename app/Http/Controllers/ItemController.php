@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 use App\Http\Requests\ItemRequest;
 use App\Models\{Category, Item};
-
 
 class ItemController extends Controller
 {
@@ -18,7 +17,7 @@ class ItemController extends Controller
     {
         return view('items.index', [
             'data' => Item::paginate(10),
-            'categories' => Category::all()
+            'categories' => Category::all(),
         ]);
     }
 
@@ -41,21 +40,21 @@ class ItemController extends Controller
         $data['category_id'] = $request->category;
         unset($data['category']);
 
-        // pergantian nama : 
+        // pergantian nama :
         $file = $request->file('image');
         $format = $file->getClientOriginalExtension();
-        $name = 'items_' . now()->format('YmdHis') . '_' . uniqid() . '.' . $format;
+        $name = 'items_'.now()->format('YmdHis').'_'.uniqid().'.'.$format;
         // items_20260715123409_abcd.png
 
         // simpan ke storage
         $file->storeAs('items', $name, 'public');
 
-        // Simpan ke ke database 
+        // Simpan ke ke database
         $data['image'] = $name;
 
         Item::create($data);
-        return back()->with('success', 'items has been created');
 
+        return back()->with('success', 'items has been created');
 
     }
 
@@ -66,7 +65,7 @@ class ItemController extends Controller
     {
         return view('items.detail', [
             'data' => Item::where('uuid', $param)->firstOrFail(),
-            'categories' =>Category::all()
+            'categories' => Category::all(),
         ]);
     }
 
@@ -81,9 +80,39 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ItemRequest $request, $param)
     {
-        //
+
+        $item = Item::where('uuid', $param)->first();
+
+        $data = $request->validated();
+        $data['uuid'] = Str::uuid7();
+
+        $data['category_id'] = $request->category;
+        unset($data['category']);
+
+        // jika user mau mengganti gambar
+        if ($request->hasFile('image')) {
+            // hapus data lama
+            if ($item->image) {
+                Storage::disk('public')->delete('/items/'.$item->image);
+            }
+
+            // pergantian nama :
+            $file = $request->file('image');
+            $format = $file->getClientOriginalExtension();
+            $name = 'items_'.now()->format('YmdHis').'_'.uniqid().'.'.$format;
+            // items_20260715123409_abcd.png
+
+            // simpan ke storage
+            $file->storeAs('items', $name, 'public');
+
+            // Simpan ke ke database
+            $data['image'] = $name;
+        }
+
+        $item->update($data);
+        return redirect()->route('items.show', $item->uuid)->with('success', 'Item Has Been Updated');
     }
 
     /**
