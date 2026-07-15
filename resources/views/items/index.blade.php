@@ -60,7 +60,7 @@
                         <tr class="text-xs uppercase tracking-[0.2em] text-slate-200 dark:text-slate-800">
 
                             <th class="px-8 py-5 text-left">Item Name</th>
-                            <th class="px-8 py-5 text-left">Stock</th>
+                            <th class="px-8 py-5 text-left">Price</th>
                             <th class="px-8 py-5 text-left">Category</th>
                             <th class="px-8 py-5 text-left">#</th>
 
@@ -74,7 +74,7 @@
                         <tr class="text-slate-600 dark:text-slate-200">
 
                             <td class="px-8 py-6">{{ $row->item_name }}</td>
-                            <td class="px-8 py-6 font-bold">{{$row->stock}} Item</td>
+                            <td class="px-8 py-6 font-bold">IDR. {{number_format($row->price)}}</td>
                             <td class="px-8 py-6 font-bold">{{$row->category->category_name}} </td>
                             <td class="px-8 py-6 text-emerald-500 font-bold">
                                 <a href="{{route('items.show', $row->uuid)}}" class="text-bold">Detail</a>

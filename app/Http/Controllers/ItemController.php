@@ -62,9 +62,12 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($param)
     {
-        //
+        return view('items.detail', [
+            'data' => Item::where('uuid', $param)->firstOrFail(),
+            'categories' =>Category::all()
+        ]);
     }
 
     /**
@@ -72,7 +75,7 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return redirect()->route('items.index');
     }
 
     /**
