@@ -118,8 +118,17 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($param)
     {
-        //
+        $item = Item::where('uuid', $param)->first();
+
+        // hapus data lama
+            if ($item->image) {
+                Storage::disk('public')->delete('/items/'.$item->image);
+            }
+
+        $item->delete();
+        return redirect()->route('items.index')
+        ->with('success', 'Item has been deleted');
     }
 }
