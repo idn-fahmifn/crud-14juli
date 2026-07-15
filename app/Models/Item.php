@@ -11,6 +11,10 @@ class Item extends Model
         'condition', 'desc', 'image'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime'
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
