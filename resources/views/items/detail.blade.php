@@ -90,7 +90,7 @@
                                     </p>
 
                                     <h3 class="font-black text-slate-700 dark:text-white">
-                                        {{ $data->category->category_name }}
+                                        {{ $data->category_id === null ? 'Category Tidak Ditemukan' : $data->category->category_name }}
                                     </h3>
 
                                 </div>

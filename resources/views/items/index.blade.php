@@ -75,7 +75,9 @@
 
                             <td class="px-8 py-6">{{ $row->item_name }}</td>
                             <td class="px-8 py-6 font-bold">IDR. {{number_format($row->price)}}</td>
-                            <td class="px-8 py-6 font-bold">{{$row->category->category_name}} </td>
+                            <td class="px-8 py-6 font-bold">
+                                {{ $row->category_id === null ? 'Category Tidak Ditemukan' : $row->category->category_name }}
+                            </td>
                             <td class="px-8 py-6 text-emerald-500 font-bold">
                                 <a href="{{route('items.show', $row->uuid)}}" class="text-bold">Detail</a>
                             </td>
