@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
+use App\Http\Requests\ItemRequest;
 use App\Models\{Category, Item};
+
 
 class ItemController extends Controller
 {
@@ -24,15 +27,36 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('items.index');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ItemRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['uuid'] = Str::uuid7();
+
+        $data['category_id'] = $request->category;
+        unset($data['category']);
+
+        // pergantian nama : 
+        $file = $request->file('image');
+        $format = $file->getClientOriginalExtension();
+        $name = 'items_' . now()->format('YmdHis') . '_' . uniqid() . '.' . $format;
+        // items_20260715123409_abcd.png
+
+        // simpan ke storage
+        $file->storeAs('items', $name, 'public');
+
+        // Simpan ke ke database 
+        $data['image'] = $name;
+
+        Item::create($data);
+        return back()->with('success', 'items has been created');
+
+
     }
 
     /**

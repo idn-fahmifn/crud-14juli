@@ -108,10 +108,10 @@
                 Add new item
             </h2>
 
-            <form method="post" action="{{route('items.store')}}" class="space-y-5">
+            <form method="post" action="{{route('items.store')}}" enctype="multipart/form-data" class="space-y-5">
                 @csrf
 
-                <div class="grid gird-cols-1 md:grid-cols-2 gap-2 my-4 ">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 my-4 ">
                     <div>
                         <x-input-label for="item_name" value="Item Name" />
                         <x-text-input type="text" name="item_name" id="item_name" :value="old('item_name')"
@@ -133,7 +133,7 @@
                     </div>
                 </div>
 
-                <div class="grid gird-cols-1 md:grid-cols-2 gap-2 my-4 ">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2 my-4 ">
                     <div>
                         <x-input-label for="price" value="Price" />
                         <x-text-input type="number" name="price" id="price" :value="old('price')"
@@ -151,7 +151,7 @@
                         ]
                         @endphp
 
-                        <x-input-label for="category" value="Category" />
+                        <x-input-label for="condition" value="Condition" />
 
 
                         @foreach ($opsi as $status => $label)
@@ -163,13 +163,23 @@
                                 <span class="ms-2 text-sm text-slate-800 dark:text-slate-200">{{$label}}</span>
                             </label>
                         </div>
-
                         @endforeach
-
-
-
                     </div>
                 </div>
+
+                <div>
+                    <x-input-label for="image" value="Image" />
+                    <x-text-input type="file" name="image" id="image" :value="old('image')"
+                        class="mt-2 block w-full rounded-2xl py-4 px-2 border" />
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="desc" value="Description" />
+                    <x-text-area name="desc" class="mt-2 block w-full rounded-2xl py-4 px-2 border"></x-text-area>
+                    <x-input-error :messages="$errors->get('desc')" class="mt-2" />
+                </div>
+
 
 
 
