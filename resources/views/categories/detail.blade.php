@@ -84,6 +84,51 @@
                     <div class="mt-8">
 
                         <!-- data yang terkait -->
+                         <div class="bg-white dark:bg-slate-900 rounded-lg overflow-hidden">
+
+                <table class="w-full">
+
+                    <thead class="bg-slate-50">
+
+                        <tr class="text-xs uppercase tracking-[0.2em] text-slate-200 dark:text-slate-800">
+
+                            <th class="px-8 py-5 text-left">Item Name</th>
+                            <th class="px-8 py-5 text-left">Price</th>
+                            <th class="px-8 py-5 text-left">Category</th>
+                            <th class="px-8 py-5 text-left">#</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @forelse ($items as $row)
+                        <tr class="text-slate-600 dark:text-slate-200">
+
+                            <td class="px-8 py-6">{{ $row->item_name }}</td>
+                            <td class="px-8 py-6 font-bold">IDR. {{number_format($row->price)}}</td>
+                            <td class="px-8 py-6 font-bold">
+                                {{ $row->category_id === null ? 'Category Tidak Ditemukan' : $row->category->category_name }}
+                            </td>
+                            <td class="px-8 py-6 text-emerald-500 font-bold">
+                                <a href="{{route('items.show', $row->uuid)}}" class="text-bold">Detail</a>
+                            </td>
+
+                        </tr>
+
+                        @empty
+                        <tr class="text-slate-600 dark:text-slate-200">
+                            <td colspan="3" class="px-8 py-6 text-emerald-500 font-bold">Item Not Found</td>
+                        </tr>
+                        @endforelse
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
                     </div>
 

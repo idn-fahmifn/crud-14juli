@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 
 use App\Http\Requests\CategoryRequest;
-use App\Models\Category;
+use App\Models\{Category, Item};
 
 class CategoryController extends Controller
 {
@@ -27,8 +27,12 @@ class CategoryController extends Controller
 
     public function detail($param)
     {
+
+        $data = Category::where('uuid', $param)->withCount('item')->firstOrFail();
+
         return view('categories.detail', [
-            'data' => Category::where('uuid', $param)->withCount('item')->firstOrFail(),
+            'data' => $data,
+            'items' => Item::where('category_id', $data->id)->get()
         ]);
     }
 
