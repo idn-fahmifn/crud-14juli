@@ -111,12 +111,62 @@
             <form method="post" action="{{route('items.store')}}" class="space-y-5">
                 @csrf
 
-                <div class="grid gird-cols-1 md:grid-cols-2 my-4 ">
+                <div class="grid gird-cols-1 md:grid-cols-2 gap-2 my-4 ">
                     <div>
                         <x-input-label for="item_name" value="Item Name" />
                         <x-text-input type="text" name="item_name" id="item_name" :value="old('item_name')"
                             class="mt-2 block w-full rounded-2xl" />
                         <x-input-error :messages="$errors->get('item_name')" class="mt-2" />
+
+                    </div>
+                    <div class="">
+                        <x-input-label for="category" value="Category" />
+                        <x-select name="category" class="mt-2 block w-full rounded-2xl">
+                            <option value="" disabled>choose category</option>
+                            @forelse ($categories as $category)
+                            <option value="{{$category->id}}" @selected(old('category'))>{{$category->category_name}}
+                            </option>
+                            @empty
+                            <option value="" disabled>category not found</option>
+                            @endforelse
+                        </x-select>
+                    </div>
+                </div>
+
+                <div class="grid gird-cols-1 md:grid-cols-2 gap-2 my-4 ">
+                    <div>
+                        <x-input-label for="price" value="Price" />
+                        <x-text-input type="number" name="price" id="price" :value="old('price')"
+                            class="mt-2 block w-full rounded-2xl" />
+                        <x-input-error :messages="$errors->get('price')" class="mt-2" />
+
+                    </div>
+                    <div class="">
+
+                        @php
+                        $opsi = [
+                        'good' => 'good',
+                        'bad' => 'bad',
+                        'maintenance' => 'maintenance',
+                        ]
+                        @endphp
+
+                        <x-input-label for="category" value="Category" />
+
+
+                        @foreach ($opsi as $status => $label)
+                        <div class="flex justify-between">
+                            <label for="" class="mt-2">
+                                <input type="radio" name="condition" id="condition" value="{{$status}}"
+                                    class="dark:text-indigo-600 focus:ring-indigo-500" @checked(old('condition',
+                                    $status->condition ?? '' ) == $status)>
+                                <span class="ms-2 text-sm text-slate-800 dark:text-slate-200">{{$label}}</span>
+                            </label>
+                        </div>
+
+                        @endforeach
+
+
 
                     </div>
                 </div>

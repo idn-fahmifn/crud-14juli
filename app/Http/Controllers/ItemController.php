@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Item;
+use App\Models\{Category, Item};
 
 class ItemController extends Controller
 {
@@ -14,7 +14,8 @@ class ItemController extends Controller
     public function index()
     {
         return view('items.index', [
-            'data' => Item::paginate(10)
+            'data' => Item::paginate(10),
+            'categories' => Category::all()
         ]);
     }
 
