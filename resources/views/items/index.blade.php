@@ -124,7 +124,7 @@
                         <x-select name="category" class="mt-2 block w-full rounded-2xl">
                             <option value="" disabled>choose category</option>
                             @forelse ($categories as $category)
-                            <option value="{{$category->id}}" @selected(old('category'))>{{$category->category_name}}
+                            <option value="{{$category->id}}" @selected(old('category') == $category->id)>{{$category->category_name}}
                             </option>
                             @empty
                             <option value="" disabled>category not found</option>
@@ -176,7 +176,7 @@
 
                 <div>
                     <x-input-label for="desc" value="Description" />
-                    <x-text-area name="desc" class="mt-2 block w-full rounded-2xl py-4 px-2 border"></x-text-area>
+                    <x-text-area name="desc" class="mt-2 block w-full rounded-2xl py-4 px-2 border">{{old('desc')}}</x-text-area>
                     <x-input-error :messages="$errors->get('desc')" class="mt-2" />
                 </div>
 
